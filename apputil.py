@@ -61,7 +61,7 @@ class GroupEstimate:
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Caches data ... setting ttl=0 will disable caching
-df_coffee = conn.read(ttl=0)
+df_coffee = conn.read(worksheet=0,ttl="0")
 
 
 # set upt eh group_estimate object and fit for the mean
