@@ -63,7 +63,17 @@ class GroupEstimate:
 # # Caches data ... setting ttl=0 will disable caching
 # df_coffee = conn.read(worksheet=0,ttl="0")
 
-df_coffee = pd.read_csv('coffee_analysis.csv')
+# auto grader complained about this one too
+#df_coffee = pd.read_csv('coffee_analysis.csv')
+
+#let's try the dataset on github
+# Define the URL of the CSV file
+url = "https://raw.githubusercontent.com/npgerard/npg_week-9/refs/heads/main/coffee_analysis.csv"
+
+# Read the CSV file directly into a Pandas DataFrame
+df_coffee = pd.read_csv(url)
+
+
 
 # set upt eh group_estimate object and fit for the mean
 grpEstimate = GroupEstimate('mean')
