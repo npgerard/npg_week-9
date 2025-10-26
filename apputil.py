@@ -22,8 +22,9 @@ class GroupEstimate:
             self.group_stats = df_combined.groupby(grouping_columns).mean()
         elif self.estimate == 'median':
             self.group_stats = df_combined.groupby(grouping_columns).median()
+        else:
+            raise ValueError(f"Estimate measure'{self.estimate}' not recognized. Use 'mean' or 'median'.")
 
-        self.group_stats.to_csv('group_stats.csv')
 
     def predict(self, X_):
         ''' performs predictions on X_ based on group statistics'''
@@ -43,7 +44,7 @@ class GroupEstimate:
             else:
                 pred = np.nan  # or some default value
             predictions.append(pred)
-        return predictions
+        return np.array(predictions)
 
 
 # def GroupEstimate(object):
