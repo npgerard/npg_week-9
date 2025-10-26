@@ -54,10 +54,13 @@ class GroupEstimate:
 #     def predict(self, X):
 #         return None
     
-
+# get the dataset to work with
 df_coffee = pd.read_csv('coffee_analysis.csv')
 
+# set upt eh group_estimate object and fit for the mean
 grpEstimate = GroupEstimate('mean')
+
+# fit the model 
 grpEstimate.fit(
     # X
     df_coffee[['roaster','roast']],
@@ -65,11 +68,13 @@ grpEstimate.fit(
     df_coffee[['rating']]
     )
 
+# ask for some predictions with the following data
 X_ = [['A.R.C.', 'Medium-Light'],
       ['PT\'s Coffee Roasting', 'Light'],
       ['BC Coffee Roasters', 'Light']
     ]
 
+# need to set up the output predictions
 estimates = grpEstimate.predict(X_)
 
 print(estimates)
