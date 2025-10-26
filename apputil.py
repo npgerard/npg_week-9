@@ -6,21 +6,23 @@ from streamlit_gsheets import GSheetsConnection
 
 class GroupEstimate:
     def __init__(self, estimate):
-        self.estimate = estimate
-        # Initialize group statistics object to be filled by fit() 
-        # and referenced by predict()
-        self.group_stats = None
+        ''' initializes the GroupEstimate object with the specified estimate measure'''
+
+        # raise a value error if estimate is not recognized
+        if estimate not in ("mean", "median"):
+            raise ValueError(f"Estimate measure '{estimate}' not recognized. Use 'mean' or 'median'.")
+        else:
+            self.estimate = estimate
+            # Initialize group statistics object to be filled by fit() 
+            # and referenced by predict()
+            self.group_stats = None
 
 
     def fit(self, X, y):
         ''' fits the model to X and y based on group statistics'''
 
-        # raise a value error if estimate is not recognized
-        if self.estimate not in ("mean", "median"):
-            raise ValueError(f"Estimate measure '{self.estimate}' not recognized. Use 'mean' or 'median'.")
-    
 
-        #Combine the datasests
+        # Combine the datasets
         df_combined = pd.concat([X.dropna(), y.dropna()], axis=1)
 
         grouping_columns = X.columns.tolist()
@@ -82,8 +84,9 @@ df_coffee = pd.read_csv(url)
 
 
 # set upt eh group_estimate object and fit for the mean
-grpEstimate = GroupEstimate('mean')
+grpEstimate = GroupEstimate('crap')
 
+# check if grpEstimate is None, because that means the fit failed
 if grpEstimate is None:
     print("grpEstimate is None")
 else: #proceed to the rest
