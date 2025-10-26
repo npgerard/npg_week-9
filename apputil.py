@@ -13,6 +13,13 @@ class GroupEstimate:
 
 
     def fit(self, X, y):
+        ''' fits the model to X and y based on group statistics'''
+
+        # raise a value error if estimate is not recognized
+        if self.estimate not in ("mean", "median"):
+            raise ValueError(f"Estimate measure '{self.estimate}' not recognized. Use 'mean' or 'median'.")
+    
+
         #Combine the datasests
         df_combined = pd.concat([X.dropna(), y.dropna()], axis=1)
 
@@ -22,8 +29,6 @@ class GroupEstimate:
             self.group_stats = df_combined.groupby(grouping_columns).mean()
         elif self.estimate == 'median':
             self.group_stats = df_combined.groupby(grouping_columns).median()
-        else:
-            raise ValueError(f"Estimate measure'{self.estimate}' not recognized. Use 'mean' or 'median'.")
 
 
     def predict(self, X_):
@@ -79,21 +84,24 @@ df_coffee = pd.read_csv(url)
 # set upt eh group_estimate object and fit for the mean
 grpEstimate = GroupEstimate('mean')
 
-# fit the model 
-grpEstimate.fit(
-    # X
-    df_coffee[['roaster','roast']],
-    # y
-    df_coffee[['rating']]
-    )
+if grpEstimate is None:
+    print("grpEstimate is None")
+else: #proceed to the rest
+    # fit the model 
+    grpEstimate.fit(
+        # X
+        df_coffee[['roaster','roast']],
+        # y
+        df_coffee[['rating']]
+        )
 
-# ask for some predictions with the following data
-X_ = [['A.R.C.', 'Medium-Light'],
-      ['PT\'s Coffee Roasting', 'Light'],
-      ['BC Coffee Roasters', 'Light']
-    ]
+    # ask for some predictions with the following data
+    X_ = [['A.R.C.', 'Medium-Light'],
+        ['PT\'s Coffee Roasting', 'Light'],
+        ['BC Coffee Roasters', 'Light']
+        ]
 
-# need to set up the output predictions
-estimates = grpEstimate.predict(X_)
+    # need to set up the output predictions
+    estimates = grpEstimate.predict(X_)
 
-print(estimates)
+    print(estimates)
