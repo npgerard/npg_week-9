@@ -84,7 +84,7 @@ df_coffee = pd.read_csv(url)
 
 
 # set upt eh group_estimate object and fit for the mean
-grpEstimate = GroupEstimate('crap')
+grpEstimate = GroupEstimate('mean')
 
 # check if grpEstimate is None, because that means the fit failed
 if grpEstimate is None:
