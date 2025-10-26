@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 
 
 class GroupEstimate:
@@ -55,7 +57,12 @@ class GroupEstimate:
 #         return None
     
 # get the dataset to work with
-df_coffee = pd.read_csv('coffee_analysis.csv')
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+# Caches data ... setting ttl=0 will disable caching
+df_coffee = conn.read(ttl="5m")
+
 
 # set upt eh group_estimate object and fit for the mean
 grpEstimate = GroupEstimate('mean')
